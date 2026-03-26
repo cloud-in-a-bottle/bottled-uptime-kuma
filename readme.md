@@ -2,7 +2,7 @@ Uptime Kuma for OpenHost. Runs as a single Docker container:
 
 - Uptime Kuma v2 (self-hosted uptime monitoring)
 - Persistent state in OpenHost app data
-- Fully private behind OpenHost authentication (no public paths)
+- Public by default on all paths
 
 ## Deploying
 
@@ -18,7 +18,7 @@ All Uptime Kuma data lives in `$OPENHOST_APP_DATA_DIR/` (database, monitor confi
 
 ## Access control
 
-This app is fully private. There are no public paths in `openhost.toml`, so all requests require OpenHost authentication.
+This app is public by default. `openhost.toml` sets `public_paths = ["/"]` so all routes are reachable without OpenHost auth.
 
 ## Resources
 
