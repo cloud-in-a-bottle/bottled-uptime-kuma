@@ -1,0 +1,18 @@
+[app]
+name = "uptime-kuma"
+version = "0.1.0"
+description = "Uptime Kuma monitoring dashboard"
+
+[runtime.container]
+image = "Dockerfile"
+port = 3001
+
+[routing]
+# No public paths — all access requires OpenHost authentication
+
+[resources]
+memory_mb = 512
+cpu_millicores = 500
+
+[data]
+app_data = true
