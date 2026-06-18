@@ -33,6 +33,12 @@ fi
 # and we skip straight to launch.
 DB="/app/data/kuma.db"
 
+# Pre-select SQLite so Uptime Kuma (v2) skips its interactive
+# "choose database" wizard and creates kuma.db on first boot.
+if [ ! -f /app/data/db-config.json ]; then
+    printf '%s' '{"type":"sqlite"}' > /app/data/db-config.json
+fi
+
 OWNER="$(printf '%s' "${OPENHOST_OWNER_USERNAME:-}" | tr -cd 'A-Za-z0-9._-')"
 [ -n "$OWNER" ] || OWNER="admin"
 
