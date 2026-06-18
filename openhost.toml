@@ -7,8 +7,12 @@ description = "Uptime Kuma monitoring dashboard"
 image = "Dockerfile"
 port = 3001
 
+# Gate the whole app behind the OpenHost router so only the authenticated
+# zone owner can reach it.  Uptime Kuma's own login is disabled (see
+# start.sh), so the OpenHost owner session IS the authentication — leaving
+# any path public would expose the full dashboard unauthenticated.
 [routing]
-public_paths = ["/"]
+public_paths = []
 
 [resources]
 memory_mb = 512
