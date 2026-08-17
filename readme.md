@@ -1,45 +1,59 @@
-Uptime Kuma for Cloud in a Bottle. Runs as a single Docker container:
+# bottled-uptime-kuma
 
-- Uptime Kuma v2 (self-hosted uptime monitoring)
-- Persistent state in Cloud in a Bottle app data
-- Owner-only: gated behind Cloud in a Bottle auth (not public)
+[Uptime Kuma](https://github.com/louislam/uptime-kuma) is a self-hosted uptime
+monitor that checks whether your sites and services are reachable and alerts you
+when they are not. This repository packages it as a Cloud in a Bottle app.
 
-## Deploying
+## What you get
 
-Deploy via the Cloud in a Bottle router dashboard and point it at this repo.
+- Uptime Kuma v2 running on `https://uptime-kuma.<zone>/`.
+- Owner only: gated behind your Cloud in a Bottle login, not public.
+- No second login. Open the app and you are already on the dashboard.
+- Monitors for HTTP and HTTPS, TCP ports, ping, DNS, and more, on the interval
+  you choose.
+- Notifications through the providers Uptime Kuma supports, such as email,
+  Slack, and webhooks.
+- Uptime history, response-time graphs, and status pages.
+- Monitors, history, and settings persist in the app's storage.
 
-## Access control and login
+## Usage
 
-This app is gated to the zone owner. `openhost.toml` sets `public_paths = []`, so
-every route requires the Cloud in a Bottle owner to be logged in; anonymous
-visitors are redirected to the Cloud in a Bottle login.
+Log in to Cloud in a Bottle, then open `https://uptime-kuma.<zone>/`. You land
+on the dashboard. Choose "Add New Monitor", pick a type such as HTTP(s), enter
+the URL to watch, and save. The monitor starts checking immediately and its
+history builds up on the dashboard. Add a notification under Settings if you
+want to be told when something goes down.
 
-Uptime Kuma has no reverse-proxy / trusted-header auth of its own, so rather than
-running two separate logins, the Cloud in a Bottle owner gate IS the
-authentication and Uptime Kuma's own login is turned off. On first boot (when the
-database is first created) `start.sh`:
+## Access control
 
-- seeds a single Uptime Kuma admin user named after the Cloud in a Bottle owner, and
-- sets Uptime Kuma's `disableAuth`, so every (already authenticated) visitor is
-  auto-logged straight into the dashboard.
+Only you can reach this app. `openhost.toml` sets `public_paths = []`, so
+anyone who is not logged in to Cloud in a Bottle is sent to the Cloud in a
+Bottle login instead.
 
-There is no Uptime Kuma setup wizard and no separate Uptime Kuma password to
-manage — the first time you open the app as the logged-in owner you land directly
-on the dashboard.
+Because Cloud in a Bottle already handles the login, Uptime Kuma's own login is
+turned off. On first boot the app creates a single Uptime Kuma admin account
+named after the zone owner and disables Uptime Kuma's login screen, so there is
+no setup wizard and no second password to keep track of.
 
-Because Uptime Kuma's own auth is disabled, do not make this app public (do not
-set `public_paths = ["/"]`): that would expose the full dashboard to anyone.
+Do not make this app public. Uptime Kuma's own login is off, so opening any
+path to anonymous visitors would expose the whole dashboard.
+
+For the same reason, status pages are visible only to you. Sharing one with
+someone who cannot log in to your zone will not work.
 
 ## Data
 
-All Uptime Kuma data lives in `$OPENHOST_APP_DATA_DIR/` (database, monitor config, notification config, status pages).
+Everything Uptime Kuma stores lives under `$OPENHOST_APP_DATA_DIR/`: the
+database, monitor configuration, notification settings, and status pages.
 
 ## Resources
 
-Uses 512MB RAM and 0.5 CPU cores.
+About 512 MB RAM and 0.5 CPU cores.
 
-## Files
+## License
 
-- `Dockerfile` — wraps official `louislam/uptime-kuma:2`
-- `start.sh` — binds the Uptime Kuma data dir to Cloud in a Bottle persistent storage, seeds the owner admin user, and disables Uptime Kuma's own auth
-- `openhost.toml` — Cloud in a Bottle app manifest (private)
+Uptime Kuma is licensed under the MIT License (Copyright (c) 2021 Louis Lam).
+Its copyright and permission notice are reproduced in `LICENSE`, as MIT
+requires for redistribution; attribution and the upstream source link are in
+`NOTICE`. The packaging files original to this repository are also provided
+under the MIT License, so this repository is MIT overall.
