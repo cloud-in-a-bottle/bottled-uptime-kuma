@@ -41,6 +41,13 @@ path to anonymous visitors would expose the whole dashboard.
 For the same reason, status pages are visible only to you. Sharing one with
 someone who cannot log in to your zone will not work.
 
+## Caveats
+
+Ping monitors do not work. App containers do not receive ICMP echo replies, so
+a Ping monitor reports 100% packet loss and stays permanently down even when the
+target is healthy. Use an HTTP(s), TCP port, or DNS monitor instead, all of
+which work normally.
+
 ## Data
 
 Everything Uptime Kuma stores lives under `$OPENHOST_APP_DATA_DIR/`: the
