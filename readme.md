@@ -16,7 +16,8 @@ visitors are redirected to the Cloud in a Bottle login.
 
 Uptime Kuma has no reverse-proxy / trusted-header auth of its own, so rather than
 running two separate logins, the Cloud in a Bottle owner gate IS the
-authentication and Uptime Kuma's own login is disabled. On first boot `start.sh`:
+authentication and Uptime Kuma's own login is turned off. On first boot (when the
+database is first created) `start.sh`:
 
 - seeds a single Uptime Kuma admin user named after the Cloud in a Bottle owner, and
 - sets Uptime Kuma's `disableAuth`, so every (already authenticated) visitor is
