@@ -29,3 +29,11 @@ Uses 512MB RAM and 0.5 CPU cores.
 - `Dockerfile` — wraps official `louislam/uptime-kuma:2`
 - `start.sh` — binds Uptime Kuma data dir to Cloud in a Bottle persistent storage
 - `openhost.toml` — Cloud in a Bottle app manifest (private)
+
+## License
+
+Uptime Kuma is licensed under the MIT License (Copyright (c) 2021 Louis Lam).
+Its copyright and permission notice are reproduced in `LICENSE`, as MIT
+requires for redistribution; attribution and the upstream source link are in
+`NOTICE`. The packaging files original to this repository are also provided
+under the MIT License, so this repository is MIT overall.
