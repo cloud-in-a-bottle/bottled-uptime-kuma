@@ -1,34 +1,54 @@
-Uptime Kuma for Cloud in a Bottle. Runs as a single Docker container:
+# bottled-uptime-kuma
 
-- Uptime Kuma v2 (self-hosted uptime monitoring)
-- Persistent state in Cloud in a Bottle app data
-- Public by default on all paths
+[Uptime Kuma](https://github.com/louislam/uptime-kuma) is a self-hosted uptime
+monitor that checks whether your sites and services are reachable and alerts you
+when they are not. This repository packages it as a Cloud in a Bottle app.
 
-## Deploying
+## What you get
 
-Deploy via the Cloud in a Bottle router dashboard and point it at this repo.
+- Uptime Kuma v2 running on `https://uptime-kuma.<zone>/`.
+- Owner only: gated behind your Cloud in a Bottle login, not public.
+- No second login. Open the app and you are already on the dashboard.
+- Monitors for HTTP and HTTPS, TCP ports, ping, DNS, and more, on the interval
+  you choose.
+- Notifications through the providers Uptime Kuma supports, such as email,
+  Slack, and webhooks.
+- Uptime history, response-time graphs, and status pages.
+- Monitors, history, and settings persist in the app's storage.
 
-## First-time setup
+## Usage
 
-On first visit, create your Uptime Kuma admin account in the setup wizard.
-
-## Data
-
-All Uptime Kuma data lives in `$OPENHOST_APP_DATA_DIR/` (database, monitor config, notification config, status pages).
+Log in to Cloud in a Bottle, then open `https://uptime-kuma.<zone>/`. You land
+on the dashboard. Choose "Add New Monitor", pick a type such as HTTP(s), enter
+the URL to watch, and save. The monitor starts checking immediately and its
+history builds up on the dashboard. Add a notification under Settings if you
+want to be told when something goes down.
 
 ## Access control
 
-This app is public by default. `openhost.toml` sets `public_paths = ["/"]` so all routes are reachable without Cloud in a Bottle auth.
+Only you can reach this app. `openhost.toml` sets `public_paths = []`, so
+anyone who is not logged in to Cloud in a Bottle is sent to the Cloud in a
+Bottle login instead.
+
+Because Cloud in a Bottle already handles the login, Uptime Kuma's own login is
+turned off. On first boot the app creates a single Uptime Kuma admin account
+named after the zone owner and disables Uptime Kuma's login screen, so there is
+no setup wizard and no second password to keep track of.
+
+Do not make this app public. Uptime Kuma's own login is off, so opening any
+path to anonymous visitors would expose the whole dashboard.
+
+For the same reason, status pages are visible only to you. Sharing one with
+someone who cannot log in to your zone will not work.
+
+## Data
+
+Everything Uptime Kuma stores lives under `$OPENHOST_APP_DATA_DIR/`: the
+database, monitor configuration, notification settings, and status pages.
 
 ## Resources
 
-Uses 512MB RAM and 0.5 CPU cores.
-
-## Files
-
-- `Dockerfile` — wraps official `louislam/uptime-kuma:2`
-- `start.sh` — binds Uptime Kuma data dir to Cloud in a Bottle persistent storage
-- `openhost.toml` — Cloud in a Bottle app manifest (private)
+About 512 MB RAM and 0.5 CPU cores.
 
 ## License
 
