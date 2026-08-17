@@ -1,0 +1,27 @@
+bottled-uptime-kuma
+===================
+
+This repository packages Uptime Kuma for Cloud in a Bottle / OpenHost.
+
+Uptime Kuma
+-----------
+This image is built FROM the official Uptime Kuma container image and
+distributes Uptime Kuma, a self-hosted uptime monitoring tool.
+
+  Upstream:    https://github.com/louislam/uptime-kuma
+  License:     MIT License, Copyright (c) 2021 Louis Lam
+  Base image:  docker.io/louislam/uptime-kuma:2 (see the FROM line in the Dockerfile)
+
+Uptime Kuma is distributed under the MIT License. Its copyright notice and the
+MIT permission notice are reproduced in LICENSE, as MIT requires for
+redistribution. Uptime Kuma's source is not modified by this package; the
+container entrypoint only binds its data directory to persistent storage and,
+on first boot, seeds the owner admin user and disables Uptime Kuma's own login
+(Cloud in a Bottle's owner gate is the authentication).
+
+Licensing of this repository
+----------------------------
+Both the bundled Uptime Kuma (MIT, Copyright (c) 2021 Louis Lam) and the files
+original to this repository — the Dockerfile, start.sh, openhost.toml, and
+documentation (Copyright (c) 2026 the Cloud in a Bottle authors) — are provided
+under the MIT License. See LICENSE.
