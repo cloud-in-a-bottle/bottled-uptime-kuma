@@ -5,7 +5,7 @@ set -e
 # Uptime Kuma stores all state in /app/data.
 PERSIST="${OPENHOST_APP_DATA_DIR:-/app/data}"
 
-if false; then  # TEMP: keep data in the image
+if [ "$PERSIST" != "/app/data" ]; then
     mkdir -p "$PERSIST"
 
     if [ -d /app/data ] && [ "$(ls -A /app/data 2>/dev/null)" ]; then
@@ -75,7 +75,7 @@ if ! has_user; then
     fi
 
     # Disable Uptime Kuma's own auth — OpenHost gating is the auth layer.
-    : # TEMP: leave Uptime Kuma auth enabled
+    sqlite3 "$DB" "INSERT INTO setting (key, value, type) VALUES ('disableAuth', 'true', 'general') ON CONFLICT(key) DO UPDATE SET value = 'true';"
     echo "Uptime Kuma SSO: local auth disabled (OpenHost owner gating is the auth)"
 
     # Stop the init instance; the real launch below picks up the seeded state.

@@ -12,7 +12,7 @@ port = 3001
 # start.sh), so the OpenHost owner session IS the authentication — leaving
 # any path public would expose the full dashboard unauthenticated.
 [routing]
-public_paths = ["/"]  # TEMP
+public_paths = []
 
 [resources]
 memory_mb = 512
