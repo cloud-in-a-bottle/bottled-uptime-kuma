@@ -16,6 +16,11 @@ when they are not. This repository packages it as a Cloud in a Bottle app.
 - Uptime history, response-time graphs, and status pages.
 - Monitors, history, and settings persist in the app's storage.
 
+`cloudinabottle.toml` sets `prebuilt_image`, so Cloud in a Bottle pulls our
+signed prebuilt image (built by CI from each release tag) instead of building
+the Dockerfile. To fork and modify this app, comment out `prebuilt_image` so
+your instance builds from source.
+
 ## Usage
 
 Log in to Cloud in a Bottle, then open `https://uptime-kuma.<zone>/`. You land
