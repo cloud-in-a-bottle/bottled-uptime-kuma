@@ -1,6 +1,6 @@
 [app]
 name = "uptime-kuma"
-version = "1.0.0"
+version = "1.1.0"
 description = "Uptime Kuma monitoring dashboard"
 
 [runtime.container]
